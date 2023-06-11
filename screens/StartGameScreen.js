@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { TextInput, View, StyleSheet } from "react-native";
-import PrimaryButton from "../components/PrimaryButton";
+import PrimaryButton from "../components/ui/PrimaryButton";
 import { Alert } from "react-native";
 
 function StartGameScreen({ onPickNumber }) {

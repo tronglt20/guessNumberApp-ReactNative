@@ -1,19 +1,32 @@
-import { StyleSheet, ImageBackground } from "react-native";
+import { StyleSheet, ImageBackground, SafeAreaView } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { useState } from "react";
 import StartGameScreen from "./screens/StartGameScreen";
 import GameScreen from "./screens/GameScreen";
+import GameOverScreen from "./screens/GameOverScreen";
 
 export default function App() {
   const [pickedNumber, setPickedNumber] = useState();
+  const [gameIsOver, setGameIsOver] = useState();
   function pickedNumberHandler(numberValue) {
     setPickedNumber(numberValue);
+    setGameIsOver(false);
+  }
+
+  function gameOverHandler() {
+    setGameIsOver(true);
   }
 
   let screen = <StartGameScreen onPickNumber={pickedNumberHandler} />;
 
   if (pickedNumber) {
-    screen = <GameScreen />;
+    screen = (
+      <GameScreen pickedNumber={pickedNumber} onGameOver={gameOverHandler} />
+    );
+  }
+
+  if (gameIsOver && pickedNumber) {
+    screen = <GameOverScreen />;
   }
 
   return (
@@ -24,7 +37,7 @@ export default function App() {
         style={styles.rootScreen}
         imageStyle={styles.backgroundImage}
       >
-        {screen}
+        <SafeAreaView style={styles.rootScreen}>{screen}</SafeAreaView>
       </ImageBackground>
     </LinearGradient>
   );
